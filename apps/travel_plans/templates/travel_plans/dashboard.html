@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Travel Dashboard</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css" integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS" crossorigin="anonymous">
+</head>
+<body>
+    
+    <div class="container">
+
+        <div class="row mt-5">
+            <div class="col-10">
+                <h2>Hello, {{ user.name }}</h2>
+            </div>
+            <div class="col-2">
+                <a href="http://localhost:8000/logout" class="btn btn-danger" role="button">Logout</a>
+            </div>
+        </div> <!-- End Dashboard Top -->
+
+        <div class="row mb-5">
+            <div class="col-12">
+                <h5>Your Trip Schedules</h5>
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th scope="col">Destination</th>
+                            <th scope="col">Travel Date Start</th>
+                            <th scope="col">Travel Date End</th>
+                            <th scope="col">Plan</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for trip in your_trips %}
+                            <tr>
+                                <td>
+                                    <a href="http://localhost:8000/travels/destination/{{ trip.id }}">{{ trip.destination }}</a>
+                                </td>
+                                <td>{{ trip.date_from|date:"M d Y" }}</td>
+                                <td>{{ trip.date_to|date:"M d Y" }}</td>
+                                <td>{{ trip.description }}</td>
+                            </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div> <!-- End Your Trips -->
+
+        <div class="row">
+            <div class="col-12">
+                <h5>Other User's Travel Plans</h5>
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th scope="col">Name</th>
+                            <th scope="col">Destination</th>
+                            <th scope="col">Travel Date Start</th>
+                            <th scope="col">Travel Date End</th>
+                            <th scope="col">Plan</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for trip in other_trips %}
+                            <tr>
+                                <td>{{ trip.creator.name }}</td>
+                                <td>
+                                    <a href="http://localhost:8000/travels/destination/{{ trip.id }}">{{ trip.destination }}</a>
+                                </td>
+                                <td>{{ trip.date_from|date:"M d Y" }}</td>
+                                <td>{{ trip.date_to|date:"M d Y" }}</td>
+                                <td>
+                                    <a href="http://localhost:8000/travels/join/{{ trip.id }}" class="btn btn-primary">Join</a>
+                                </td>
+                            </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+                <a href="http://localhost:8000/travels/add" class="btn btn-primary float-right mt-5">Add Travel Plan</a>
+            </div>
+        </div> <!-- End Other Trips -->
+
+    </div>
+
+</body>
+</html>

@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Add Trip</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css" integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS" crossorigin="anonymous">
+</head>
+<body>
+
+    <div class="container">
+        <div class="row mt-5">
+            <div class="col-3 offset-10">
+                <div class="btn-group justify-content-between" role="group">
+                    <a href="http://localhost:8000/travels" class="btn btn-primary mr-1 rounded">Home</a>
+                    <a href="http://localhost:8000/logout" class="btn btn-danger rounded">Logout</a>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-7">
+                <h2>{{ trip.destination }}</h2>
+                <div class="row">
+                    <div class="col-6 offset-1">
+                        <p>Planned By: {{ trip.creator.name }}</p>
+                        <p>Description: {{ trip.description }}</p>
+                        <p>Travel Date From: {{ trip.date_from|date:"M d Y" }}</p>
+                        <p>Travel Date To: {{ trip.date_to|date:"M d Y" }}</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-7">
+                <h2>Other Users Joining The Trip</h2>
+                <div class="row">
+                    <div class="col-6 offset-1">
+                        {% for user in trip.joining.all %}
+                            {% if user.id != request.session.user_id %}
+                                <p>{{user.name}}</p>
+                            {% endif %}
+                        {% endfor %}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</body>
+</html>
